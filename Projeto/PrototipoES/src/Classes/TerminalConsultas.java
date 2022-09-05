@@ -97,16 +97,13 @@ public class TerminalConsultas {
         System.out.println("\nTerminalConsultas.exibirMedicamentosAlternativos().");
         String doença = this.consulta.getDoença();
         ArrayList<Medicamento> m = new ArrayList();
-        String resumo = "";
         for(Consulta consulta :clínica.getConsultas()){
-            m.addAll(consulta.medicamentosParaDoença(doença));
-        }
-        Paciente p = this.consulta.getPaciente();
-        for(Medicamento med:m){
-            if(p.verificarAlergia(med) == false){
-                resumo += med.getNome();
+            if(consulta.getDoença().equals(doença)){
+                m.addAll(consulta.medicamentosReceitados());
             }
         }
+        Paciente p = this.consulta.getPaciente();
+        String resumo = p.filtrarMedicamentosNãoAlérgicos(m);
         return resumo;
     }
     
@@ -155,10 +152,6 @@ public class TerminalConsultas {
     
     public String doençasComMaiorNúmeroDeCasos(String dataInicial){
         System.out.println("\nTerminalConsultas.doençasComMaiorNúmeroDeCasos().");
-        String resumo = "";
-        for(Consulta consulta :clínica.getConsultas()){
-            resumo += consulta.doençaDiagnosticada(dataInicial);
-        }
-        return resumo;
+        return clínica.doençasMaisComuns(dataInicial);
     }
 }

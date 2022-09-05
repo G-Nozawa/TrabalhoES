@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package Classes;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 /**
@@ -55,8 +57,8 @@ public class Clínica {
         }
         for(Funcionário médico: funcionários){
             if(médico instanceof Médico){
-                if(((Médico)médico).buscarMédico(nomeMédico, especialização, telefoneMédico) != null){
-                    m = ((Médico)médico);
+                if(((Médico) médico).buscarMédico(nomeMédico, especialização, telefoneMédico) != null){
+                    m = ((Médico) médico);
                     break;
                 }
             }
@@ -89,7 +91,26 @@ public class Clínica {
         System.out.println("Clínica.históricoPaciente().");
         String resumo = "";
         for(Consulta consulta : consultas){
-            resumo += consulta.históricoPaciente(paciente);
+            if(consulta.getPaciente().equals(paciente)){
+                resumo += consulta.históricoPaciente(paciente);
+            }
+        }
+        return resumo;
+    }
+    
+    public String doençasMaisComuns(String dataInicial){
+        System.out.println("Clínica.doençasMaisComuns().");
+        String resumo = "";
+        Date data;
+        try{
+            data = new SimpleDateFormat("dd/MM/yyyy").parse(dataInicial);
+        }catch(ParseException e){
+            data = new Date();
+        }
+        for(Consulta consulta : consultas){
+            if(consulta.getData().after(data)){
+                resumo += consulta.getDoença();
+            }
         }
         return resumo;
     }
@@ -98,7 +119,7 @@ public class Clínica {
         System.out.println("Clínica.getCatálogo().");
         return catálogo;
     }
-    
+
     public ArrayList<Consulta> getConsultas() {
         System.out.println("Clínica.getConsultas().");
         return consultas;

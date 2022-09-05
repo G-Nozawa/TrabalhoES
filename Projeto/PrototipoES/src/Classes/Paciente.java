@@ -96,4 +96,15 @@ public class Paciente implements Serializable{
         String[] resumo = new String[] {this.nome, this.endereço};
         return resumo;
     }
+    
+    public String filtrarMedicamentosNãoAlérgicos(ArrayList<Medicamento> medicamentos){
+        System.out.println("Paciente.filtrarMedicamentosNãoAlérgicos().");
+        String resumo = "";
+        for(Medicamento m:medicamentos){
+            if(this.verificarAlergia(m) == false){
+                resumo += m.getNome();
+            }
+        }
+        return resumo;
+    }
 }

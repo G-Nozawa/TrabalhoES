@@ -50,9 +50,9 @@ public class Consulta implements Serializable{
         return doença;
     }
     
-    public String doençaDiagnosticada(String dataInicial) {
-        System.out.println("Consulta.doençaDiagnostica()");
-        return doença;
+    public Date getData() {
+        System.out.println("Consulta.getData()");
+        return data;
     }
     
     public Paciente getPaciente() {
@@ -88,8 +88,8 @@ public class Consulta implements Serializable{
         return "";
     }   
     
-    public ArrayList<Medicamento> medicamentosParaDoença(String doença){
-        System.out.println("Consulta.medicamentosParaDoença()");
+    public ArrayList<Medicamento> medicamentosReceitados(){
+        System.out.println("Consulta.medicamentosReceitados()");
         ArrayList<Medicamento> m = new ArrayList();
         if(this.doença.equals(doença)){
             for(Receita receita: receitas){
